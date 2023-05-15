@@ -1,47 +1,46 @@
 export const categories = [
-    {name: 'All', value: 'all'},
-    {name: 'Wears', value: 'wears'},
-    {name: 'Food', value: 'food'},
-    {name: 'Gadgets', value: 'gadgets'},
-]
+  { name: 'All', value: 'all' },
+  { name: 'Wears', value: 'wears' },
+  { name: 'Food', value: 'food' },
+  { name: 'Gadgets', value: 'gadgets' },
+];
 
 export const sidebarList = [
-      {
-        id: 'account',
-        name: 'Account',
-        icon: 'bi-house-door',
-        routerLink: '/account'
-      },
-      {
-        id: 'products',
-        name: 'Products',
-        icon: 'bi-ui-checks-grid',
-        routerLink: '/products'
-      },
-      {
-        id: 'manage-products',
-        name: 'Manage Products',
-        icon: 'bi-kanban-fill',
-        routerLink: '/manage-products'
-      },
-      {
-        id: 'create-product',
-        name: 'Create Products',
-        icon: 'bi-bag-plus-fill',
-        routerLink: '/create-product'
-      },
-      {
-        id: 'orders',
-        name: 'Orders',
-        icon: 'bi-table',
-        routerLink: '/orders'
-      },
-      
-      {
-        id: 'customers',
-        name: 'Customers',
-        icon: 'bi-people',
-        routerLink: '/customers'
-      },
-      
-    ]
+  {
+    id: 'account',
+    name: 'Account',
+    icon: 'bi-house-door',
+    routerLink: '/account',
+  },
+  {
+    id: 'products',
+    name: 'Products',
+    icon: 'bi-ui-checks-grid',
+    routerLink: '/products',
+  },
+  {
+    id: 'manage-products',
+    name: 'Manage Products',
+    icon: 'bi-kanban-fill',
+    routerLink: '/manage-products',
+  },
+  {
+    id: 'create-product',
+    name: 'Create Products',
+    icon: 'bi-bag-plus-fill',
+    routerLink: '/create-product',
+  },
+  {
+    id: 'orders',
+    name: 'Orders',
+    icon: 'bi-table',
+    routerLink: '/orders',
+  },
+
+  {
+    id: 'customers',
+    name: 'Customers',
+    icon: 'bi-people',
+    routerLink: '/customers',
+  },
+];

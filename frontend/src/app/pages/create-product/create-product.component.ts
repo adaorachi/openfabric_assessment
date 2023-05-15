@@ -13,9 +13,8 @@ import { categories } from 'src/app/utils/constants';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.css'],
 })
-
 export class CreateProductComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   id!: string;
@@ -23,90 +22,90 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   categories!: Category[];
   isAddMode!: boolean;
   submitting: boolean = false;
-  buttonText: string
+  buttonText: string;
   isAuthenticated: boolean = false;
 
   private authenticatedSub: Subscription;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductsService,
     private authService: AuthService,
-    private notifier: NotifierService,
-  ) { 
-  }
-  
+    private notifier: NotifierService
+  ) {}
+
   ngOnInit() {
-    this.authenticatedSub = this.authService.getAuthenticatedSub().subscribe(status => {
-      this.isAuthenticated = status
-    })
+    this.authenticatedSub = this.authService
+      .getAuthenticatedSub()
+      .subscribe((status) => {
+        this.isAuthenticated = status;
+      });
 
-     this.isAuthenticated = this.authService.getIsAuthenticated();
+    this.isAuthenticated = this.authService.getIsAuthenticated();
 
-    this.product = history.state.data
+    this.product = history.state.data;
     this.id = this.route.snapshot.params['productId'];
     this.isAddMode = !this.id;
-        
-    this.productForm =  this.formBuilder.group({
+
+    this.productForm = this.formBuilder.group({
       title: ['', Validators.required],
       desc: ['', Validators.required],
       price: ['', Validators.required],
       category: ['', Validators.required],
       imageUrl: ['', Validators.required],
     });
-    
+
     if (!this.isAddMode) {
       this.productForm.patchValue(this.product);
-      this.buttonText = 'Add product'
+      this.buttonText = 'Add product';
     }
   }
 
-   showNotification( type: string, message: string ) {
-		this.notifier.notify( type, message );
-   }
-  
+  showNotification(type: string, message: string) {
+    this.notifier.notify(type, message);
+  }
+
   getCategoryList() {
-    return this.categories = categories.filter(i => i.value !== 'all')
+    return (this.categories = categories.filter((i) => i.value !== 'all'));
   }
 
   onCreateProduct(payload: Product) {
-    this.productService.createProduct(payload)
-      .subscribe((product: Product) => {
-        this.submitting = false;
-        this.productForm.reset();
-        this.showNotification('success', 'Product successfully created!')
-         this.router.navigate(['/manage-products'])
-      })
+    this.productService.createProduct(payload).subscribe((product: Product) => {
+      this.submitting = false;
+      this.productForm.reset();
+      this.showNotification('success', 'Product successfully created!');
+      this.router.navigate(['/manage-products']);
+    });
   }
 
   onEditProduct(productId: string, payload: Product) {
-    this.productService.editProduct(productId, payload)
+    this.productService
+      .editProduct(productId, payload)
       .subscribe((product: Product) => {
         this.submitting = false;
-        this.showNotification('success', 'Product successfully edited!')
-         this.router.navigate(['/manage-products'])
-      })
+        this.showNotification('success', 'Product successfully edited!');
+        this.router.navigate(['/manage-products']);
+      });
   }
-  
+
   onSubmit() {
     if (this.productForm.invalid) {
       return;
     }
 
     this.submitting = true;
-    const payload = this.productForm.value
-    
+    const payload = this.productForm.value;
+
     if (this.isAddMode) {
-      this.onCreateProduct(payload)
+      this.onCreateProduct(payload);
     } else {
       this.onEditProduct(this.id, payload);
     }
   }
-  
-    ngOnDestroy() {
-    this.authenticatedSub.unsubscribe()
-    }
-  
+
+  ngOnDestroy() {
+    this.authenticatedSub.unsubscribe();
+  }
 }

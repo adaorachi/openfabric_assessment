@@ -1,3 +1,4 @@
+// @ts-nocheck
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
@@ -7,8 +8,20 @@ import userRoutes from "./routes/user.js";
 import productRoutes from "./routes/product.js";
 import orderRoutes from "./routes/order.js";
 import config from "./config.js";
+const CONNECTION_URL = config.CONNECTION_URL;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(CONNECTION_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -30,11 +43,7 @@ app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/orders", orderRoutes);
 
-const CONNECTION_URL = config.CONNECTION_URL;
-const PORT = process.env.PORT || 5000;
-
-mongoose
-  .connect(CONNECTION_URL)
+connectDB()
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
   )

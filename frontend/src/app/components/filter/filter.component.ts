@@ -7,13 +7,13 @@ import { categories } from 'src/app/utils/constants';
   templateUrl: './filter.component.html',
 })
 export class FilterComponent {
-  categories: Category[] = categories
-  category: Category = categories[0]
+  categories: Category[] = categories;
+  category: Category = categories[0];
 
   @Output() categoryValueEvent = new EventEmitter<any>();
 
   getCategoryValue(category: Category) {
     this.categoryValueEvent.emit(category);
-    this.category = category
+    this.category = category;
   }
 }

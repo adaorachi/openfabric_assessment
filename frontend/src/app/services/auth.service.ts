@@ -4,86 +4,91 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Subject } from 'rxjs';
 import User from '../models/auth';
+import { environment as env } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-  
 export class AuthService {
-  private ROOT_URL = 'http://localhost:5000/api/v1/users';
+  private ROOT_URL = `${env.baseURL}/users`;
   private token: string;
   private authenticatedSub = new Subject<boolean>();
-  private isAuthenticated: boolean = false
-  private logOutTimer: any
+  private isAuthenticated: boolean = false;
+  private logOutTimer: any;
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  
+
   constructor(
     private http: HttpClient,
     private notifier: NotifierService,
     private router: Router
-  ) { }
+  ) {}
 
   getToken() {
     return this.token;
   }
 
   getAuthenticatedSub() {
-    return this.authenticatedSub.asObservable()
+    return this.authenticatedSub.asObservable();
   }
 
   getIsAuthenticated() {
-    return this.isAuthenticated
+    return this.isAuthenticated;
   }
 
   authInUser(payload: User, isLoginPage: boolean) {
-    const isLogin = isLoginPage
+    const isLogin = isLoginPage;
     const endpoint = isLogin ? 'login' : 'sign-up';
 
-    return this.http.post<{
-      userEmail: string; token: string, expiresIn: number
-      }>
-      (`${this.ROOT_URL}/${endpoint}`, payload, this.httpOptions)
+    return this.http
+      .post<{
+        userEmail: string;
+        token: string;
+        expiresIn: number;
+      }>(`${this.ROOT_URL}/${endpoint}`, payload, this.httpOptions)
       .subscribe((res) => {
-        this.token = res.token
+        this.token = res.token;
         if (this.token) {
           this.authenticatedSub.next(true);
           this.isAuthenticated = true;
 
           this.logOutTimer = setTimeout(() => {
-            this.logOutUser()
+            this.logOutUser();
           }, res.expiresIn * 10);
 
           const now = new Date();
-          const expiresDate = new Date(now.getTime() + (res.expiresIn * 1000))
+          const expiresDate = new Date(now.getTime() + res.expiresIn * 1000);
 
           this.storeLoginDetails(this.token, expiresDate);
 
-          this.showNotification('success', `User successfully ${isLogin ? 'logged in' : 'registered'}!`)
+          this.showNotification(
+            'success',
+            `User successfully ${isLogin ? 'logged in' : 'registered'}!`
+          );
           this.router.navigate(['/']);
         }
-      })
+      });
   }
 
   logOutUser() {
     this.token = '';
     this.isAuthenticated = false;
     this.authenticatedSub.next(false);
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
     clearTimeout(this.logOutTimer);
     this.clearLoginDetails();
 
-    this.showNotification('success', 'User successfully logged out')
+    this.showNotification('success', 'User successfully logged out');
   }
 
   storeLoginDetails(token: string, expirationDate: Date) {
     const obj = {
       token,
-      expiresIn: expirationDate.toISOString()
-    }
-    localStorage.setItem('onShopToken', JSON.stringify(obj))
+      expiresIn: expirationDate.toISOString(),
+    };
+    localStorage.setItem('onShopToken', JSON.stringify(obj));
   }
 
   clearLoginDetails() {
@@ -92,18 +97,17 @@ export class AuthService {
 
   getLocalStorageData() {
     const data = localStorage.getItem('onShopToken');
-  
-    const { token, expiresIn } = JSON.parse(data || '{}')
+
+    const { token, expiresIn } = JSON.parse(data || '{}');
 
     if (!token || !expiresIn) {
       return;
     }
-  
+
     return {
       token,
-      expiresIn: new Date(expiresIn)
-    }
-    
+      expiresIn: new Date(expiresIn),
+    };
   }
 
   authenticatedFromLocalStorage() {
@@ -121,7 +125,7 @@ export class AuthService {
     }
   }
 
-  private showNotification( type: string, message: string ) {
-		this.notifier.notify( type, message );
-   }
+  private showNotification(type: string, message: string) {
+    this.notifier.notify(type, message);
+  }
 }

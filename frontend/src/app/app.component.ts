@@ -5,23 +5,21 @@ import { AuthService } from './services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-  
 export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
-  isPublicPage: boolean = false
+  isPublicPage: boolean = false;
   routeSubscription!: Subscription;
 
-  constructor(private router: Router, private authService: AuthService) { }
-  
+  constructor(private router: Router, private authService: AuthService) {}
+
   ngOnInit() {
-     this.routeSubscription = this.router.events.subscribe(event => {
+    this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isPublicPage = ['/login', '/register'].includes(this.router.url);
-
-        }
-     });
+      }
+    });
     this.authService.authenticatedFromLocalStorage();
   }
 

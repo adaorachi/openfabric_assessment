@@ -1,4 +1,4 @@
 export default class Category {
-    name!: string;
-    value!: string;
+  name!: string;
+  value!: string;
 }

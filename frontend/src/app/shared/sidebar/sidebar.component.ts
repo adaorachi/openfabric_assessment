@@ -7,13 +7,11 @@ import { sidebarList } from 'src/app/utils/constants';
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-  
- navList: any = sidebarList;
+  navList: any = sidebarList;
 
- constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   logOut() {
-  this.authService.logOutUser()
+    this.authService.logOutUser();
   }
-  
 }
