@@ -48,7 +48,8 @@ export class AuthService {
         token: string;
         expiresIn: number;
       }>(`${this.ROOT_URL}/${endpoint}`, payload, this.httpOptions)
-      .subscribe((res) => {
+      .subscribe(
+        (res) => {
         this.token = res.token;
         if (this.token) {
           this.authenticatedSub.next(true);
@@ -56,7 +57,7 @@ export class AuthService {
 
           this.logOutTimer = setTimeout(() => {
             this.logOutUser();
-          }, res.expiresIn * 10);
+          }, res.expiresIn * 1000);
 
           const now = new Date();
           const expiresDate = new Date(now.getTime() + res.expiresIn * 1000);
@@ -69,7 +70,13 @@ export class AuthService {
           );
           this.router.navigate(['/']);
         }
-      });
+      },
+        (error) => {
+           this.showNotification(
+            'error',
+            `${JSON.stringify(error?.error?.message)}`
+          );
+        });
   }
 
   logOutUser() {

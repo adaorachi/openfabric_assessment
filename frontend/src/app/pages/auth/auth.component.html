@@ -1,4 +1,13 @@
-<div class="bg-white p-4 w-25 m-auto rounded shadow-sm">
+<div class="bg-white p-4 auth-form m-auto rounded shadow-sm">
+  <div *ngIf="isLoginPage">
+    <div class="alert alert-info" role="alert">
+      You can login with the following test user details.
+      <div class="mt-2">
+        <div><span class="fw-bold">Email: </span>testuser@example.com</div>
+        <div><span class="fw-bold">Password: </span>password@123</div>
+      </div>
+    </div>
+  </div>
   <div class="text-center mb-3">
     <h4 class="fw-bolder">{{ isLoginPage ? "Login" : "Sign Up" }}</h4>
   </div>

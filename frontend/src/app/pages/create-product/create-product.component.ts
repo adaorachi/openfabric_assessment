@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotifierService } from 'angular-notifier';
 import { Subscription } from 'rxjs';
 import Category from 'src/app/models/category';
 
@@ -33,7 +32,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     private router: Router,
     private productService: ProductsService,
     private authService: AuthService,
-    private notifier: NotifierService
   ) {}
 
   ngOnInit() {
@@ -63,29 +61,22 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  showNotification(type: string, message: string) {
-    this.notifier.notify(type, message);
-  }
-
   getCategoryList() {
     return (this.categories = categories.filter((i) => i.value !== 'all'));
   }
 
   onCreateProduct(payload: Product) {
-    this.productService.createProduct(payload).subscribe((product: Product) => {
+    this.productService.createProduct(payload, () => {
       this.submitting = false;
       this.productForm.reset();
-      this.showNotification('success', 'Product successfully created!');
-      this.router.navigate(['/manage-products']);
+       this.router.navigate(['/manage-products']);
     });
   }
 
   onEditProduct(productId: string, payload: Product) {
     this.productService
-      .editProduct(productId, payload)
-      .subscribe((product: Product) => {
+      .editProduct(productId, payload, () => {
         this.submitting = false;
-        this.showNotification('success', 'Product successfully edited!');
         this.router.navigate(['/manage-products']);
       });
   }

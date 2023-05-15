@@ -16,31 +16,59 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private notifier: NotifierService) {}
 
-  getProducts() {
-    return this.http.get<Product[]>(`${this.ROOT_URL}`);
+  getProducts(callback: any) {
+    return this.http.get<Product[]>(`${this.ROOT_URL}`).subscribe((products: Product[]) => {
+      callback(products)
+    });
   }
 
-  getProduct(productId: string) {
-    return this.http.get<Product>(`${this.ROOT_URL}/${productId}`);
-  }
-
-  createProduct(payload: Product) {
+  createProduct(payload: Product, callback: any) {
     return this.http.post<Product>(
       `${this.ROOT_URL}`,
       payload,
       this.httpOptions
-    );
+    ).subscribe(
+      () => {
+      callback();
+  
+      this.showNotification('success', 'Product successfully created!');
+      },
+    (error) => {
+        this.showNotification(
+        'error',
+        `${JSON.stringify(error?.error?.message)}`
+      );
+      });
   }
 
-  editProduct(productId: string, payload: Product) {
+  editProduct(productId: string, payload: Product, callback: any) {
     return this.http.patch<Product>(
       `${this.ROOT_URL}/${productId}`,
       payload,
       this.httpOptions
-    );
+    ).subscribe(
+      () => {
+      callback();
+  
+      this.showNotification('success', 'Product successfully edited!');
+      },
+    (error) => {
+        this.showNotification(
+        'error',
+        `${JSON.stringify(error?.error?.message)}`
+      );
+      });
   }
 
-  deleteProduct(productId: string) {
-    return this.http.delete<Product>(`${this.ROOT_URL}/${productId}`);
+  deleteProduct(productId: string, callback: any) {
+    return this.http.delete<Product>(`${this.ROOT_URL}/${productId}`).subscribe((product: Product) => {
+      callback(product);
+  
+      this.showNotification('success', 'Product successfully deleted!');
+    });
+  }
+
+   private showNotification(type: string, message: string) {
+    this.notifier.notify(type, message);
   }
 }

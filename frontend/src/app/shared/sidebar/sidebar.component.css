@@ -1,0 +1,15 @@
+.drawer-container {
+    width: 280px;
+}
+
+.close-drawer {
+    left: -1000px;
+    transition: 1s;
+}
+
+@media only screen and (min-width: 768px) {
+.close-drawer {
+    left: 0;
+    transition: none;
+    }
+}

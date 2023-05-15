@@ -1,7 +1,8 @@
 export const categories = [
   { name: 'All', value: 'all' },
-  { name: 'Wears', value: 'wears' },
-  { name: 'Food', value: 'food' },
+  { name: 'Clothings', value: 'clothings' },
+  { name: 'Footwear & Bags', value: 'footwear_and_bags' },
+  { name: 'Furniture', value: 'furniture' },
   { name: 'Gadgets', value: 'gadgets' },
 ];
 

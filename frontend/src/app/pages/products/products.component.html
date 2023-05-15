@@ -1,4 +1,4 @@
-<div>
+<div class="">
   <header class="py-5 bg-success">
     <div class="container px-4 px-lg-5 my-5">
       <div class="text-center text-white">
@@ -16,7 +16,7 @@
       ></filter-widget>
 
       <div
-        class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3"
+        class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 g-lg-3"
         *ngIf="filteredProducts.length"
       >
         <div class="col" *ngFor="let product of filteredProducts">
@@ -39,7 +39,7 @@
                   >
                 </h6>
                 <span class="text-capitalize text-sm fw-bold text-black">{{
-                  product.category
+                  startCaseString(product.category)
                 }}</span>
               </div>
               <p class="card-text">

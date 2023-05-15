@@ -1,6 +1,4 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { NotifierService } from 'angular-notifier';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import Product from 'src/app/models/product';
 import { ProductsService } from 'src/app/services/products.service';
@@ -23,7 +21,6 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductsService,
     private authService: AuthService,
-    private notifier: NotifierService
   ) {}
 
   ngOnInit() {
@@ -37,15 +34,12 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
 
     if (this.isAuthenticated) {
       this.isGettingProducts = true;
-      this.productService.getProducts().subscribe((products: Product[]) => {
-        this.products = products;
-        this.isGettingProducts = false;
-      });
+       this.productService.getProducts((products: Product[]) => {
+          this.products = products;
+          this.isGettingProducts = false;
+       })
+     
     }
-  }
-
-  showNotification(type: string, message: string) {
-    this.notifier.notify(type, message);
   }
 
   onDeleteProduct(productId: string) {
@@ -53,13 +47,11 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
     this.isDeletingProduct = true;
 
     this.productService
-      .deleteProduct(productId)
-      .subscribe((product: Product) => {
+      .deleteProduct(productId, (product: Product) => {
         this.products = this.products.filter((i) => i._id !== product._id);
         this.isDeletingProduct = false;
         this.productId = '';
 
-        this.showNotification('success', 'Product successfully deleted!');
       });
   }
 

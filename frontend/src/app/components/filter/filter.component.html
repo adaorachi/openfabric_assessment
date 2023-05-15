@@ -1,8 +1,8 @@
 <div class="d-flex flex flex-wrap g-2 mb-3">
   <button
     *ngFor="let cat of categories"
-    class="rounded-pill p-2 outline-0 border-0 text-white m-1 px-4 shadow fs-6"
-    [ngClass]="cat.value == category.value ? 'bg-primary' : 'bg-secondary'"
+    class="rounded-pill p-2 outline-0 border-0 text-white m-1 px-4 shadow-sm fs-6"
+    [ngClass]="cat.value == category.value ? 'bg-primary' : 'bg-filter-pill'"
     (click)="getCategoryValue(cat)"
   >
     {{ cat.name }}

@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const categoryList = ["food", "wears", "gadgets"];
+const categoryList = ["clothings", "footwear_and_bags", "furniture", "gadgets"];
 
 export const createProductSchema = Joi.object({
   title: Joi.string().trim().required(),

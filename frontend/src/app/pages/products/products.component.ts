@@ -1,11 +1,7 @@
-import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
-  ContentChild,
-  Input,
-  TemplateRef,
-  ViewChild,
 } from '@angular/core';
+import { startCase } from 'lodash';
 import Category from 'src/app/models/category';
 import Product from 'src/app/models/product';
 import { ProductsService } from 'src/app/services/products.service';
@@ -27,11 +23,12 @@ export class ProductsComponent {
 
   ngOnInit() {
     this.isGettingProducts = true;
-    this.productService.getProducts().subscribe((products: Product[]) => {
+
+    this.productService.getProducts((products: Product[]) => {
       this.products = products;
       this.filteredProducts = products;
       this.isGettingProducts = false;
-    });
+    })
   }
 
   onFilterByCategory(category: Category) {
@@ -46,5 +43,9 @@ export class ProductsComponent {
 
   truncateString(str: string) {
     return truncate(str, 100);
+  }
+
+  startCaseString(str: string) {
+    return startCase(str);
   }
 }

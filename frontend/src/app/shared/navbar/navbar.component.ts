@@ -7,18 +7,25 @@ import { NavigationEnd, Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css'],
+
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private authenticatedSub: Subscription;
   isAuthenticated: boolean = false;
   userEmail: string;
   routeSubscription: any;
+  isDrawerOpen: boolean = false
+  isPublicPage: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
+    
   ngOnInit() {
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        this.isPublicPage = ['/login', '/register'].includes(this.router.url);
+        
         const data = this.authService.getLocalStorageData();
 
         const { email, userId } = jwt_decode<{ email: string; userId: string }>(
@@ -39,6 +46,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.authService.logOutUser();
+  }
+
+  onOpenDrawer(value: boolean) {
+    this.isDrawerOpen = value
   }
 
   ngOnDestroy() {

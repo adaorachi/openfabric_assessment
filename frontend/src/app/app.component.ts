@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isPublicPage = ['/login', '/register'].includes(this.router.url);
+
       }
     });
     this.authService.authenticatedFromLocalStorage();

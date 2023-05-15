@@ -5,6 +5,7 @@ import { categories } from 'src/app/utils/constants';
 @Component({
   selector: 'filter-widget',
   templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.css'],
 })
 export class FilterComponent {
   categories: Category[] = categories;

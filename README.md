@@ -1,4 +1,4 @@
-## ONSHOP - Online Shopping platform
+## ONSHOPPRS - Online Shopping platform
 
 This is an Online Shopping platform built using [Angular](https://angular.io/) for the front-end processes and [NodeJs](https://nodejs.org/en/), [Express.js](https://expressjs.com/), [MongoDB](https://www.mongodb.com/) and [Mongoose](https://mongoosejs.com/) for the back end services, to store data and build APIs endpoints for retrieving and manipulating user data.
 
@@ -34,7 +34,7 @@ Choose a database, design a schema for the product list and implement CRUD opera
 
 This is the link to the live preview. Feel free to visit.<br>
 
-The live version of the project: [OnShop App](https://onshopprs.netlify.app/)<br>
+The live version of the project: [OnShopprs App](https://onshopprs.netlify.app/)<br>
 
 <!-- REQUIRED INSTALLATION -->
 
