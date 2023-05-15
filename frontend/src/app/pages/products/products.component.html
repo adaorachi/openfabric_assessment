@@ -1,0 +1,83 @@
+<div>
+  <header class="py-5 bg-success">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Shop in style</h1>
+        <p class="lead fw-normal text-white-50 mb-0">
+          Come and experience great shopping!
+        </p>
+      </div>
+    </div>
+  </header>
+  <div class="mt-5">
+    <div *ngIf="!isGettingProducts">
+      <filter-widget
+        (categoryValueEvent)="onFilterByCategory($event)"
+      ></filter-widget>
+
+      <div
+        class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3"
+        *ngIf="filteredProducts.length"
+      >
+        <div class="col" *ngFor="let product of filteredProducts">
+          <div class="card bg-white rounded-2 overflow-hidden">
+            <div class="box-image-bg box-image-h">
+              <img
+                src="{{ product.imageUrl }}"
+                class="card-img-top h-100 object-fit-contain"
+                alt="image"
+              />
+            </div>
+            <div class="card-body card-body-height p-4">
+              <div class="mb-2">
+                <h6 class="card-title text-sm text-uppercase">
+                  <a
+                    [routerLink]="['/product', product._id]"
+                    [state]="{ data: product }"
+                    class="card-title link-primary link-underline-opacity-0 link-opacity-75-hover"
+                    >{{ product.title }}</a
+                  >
+                </h6>
+                <span class="text-capitalize text-sm fw-bold text-black">{{
+                  product.category
+                }}</span>
+              </div>
+              <p class="card-text">
+                {{ truncateString(product.desc) }}
+              </p>
+            </div>
+            <div class="card-footer m-2">
+              <div
+                class="d-flex flex-row justify-content-between align-items-center"
+              >
+                <small class="text-primary fw-bold">{{
+                  product.price | currency
+                }}</small>
+                <div class="d-flex flex-row gap-2">
+                  <span class="nav-item">
+                    <a href="#" class="nav-link link-dark" aria-current="page">
+                      <i class="bi bi-heart-fill text-black-50"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a href="#" class="nav-link link-dark">
+                      <i class="bi bi-cart-fill text-black-50"></i>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <loader-widget
+        [title]="'No content'"
+        *ngIf="!filteredProducts.length"
+      ></loader-widget>
+    </div>
+    <loader-widget
+      [title]="'Content Loading ...'"
+      *ngIf="isGettingProducts"
+    ></loader-widget>
+  </div>
+</div>

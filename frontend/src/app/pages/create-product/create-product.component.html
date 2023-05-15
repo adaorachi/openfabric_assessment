@@ -1,0 +1,89 @@
+<div>
+  <div class="bg-white p-3" *ngIf="isAuthenticated">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Title</span>
+        <input
+          type="text"
+          aria-label="Title"
+          class="form-control"
+          formControlName="title"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">Description</span>
+        <textarea
+          class="form-control"
+          aria-label="Description"
+          name="desc"
+          formControlName="desc"
+        ></textarea>
+      </div>
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01"
+          >Category</label
+        >
+        <select
+          class="form-select"
+          id="inputGroupSelect01"
+          formControlName="category"
+        >
+          <option selected>Choose...</option>
+          <option value="{{ cat.value }}" *ngFor="let cat of getCategoryList()">
+            {{ cat.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input
+          type="number"
+          class="form-control"
+          aria-label="Dollar amount (with dot and two decimal places)"
+          formControlName="price"
+        />
+      </div>
+
+      <!-- <div class="input-group mb-3">
+        <input type="file" class="form-control" id="inputGroupFile02" />
+        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+      </div> -->
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">Image URL</span>
+        <input
+          type="text"
+          aria-label="ImageUrl"
+          class="form-control"
+          formControlName="imageUrl"
+        />
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-secondary btn-sm">Clear</button>
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm"
+          [disabled]="!productForm.valid || submitting"
+        >
+          {{
+            submitting
+              ? isAddMode
+                ? "Adding .."
+                : "Editing ..."
+              : isAddMode
+              ? "Add Product"
+              : "Edit Product"
+          }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <loader-widget
+    [title]="'You must be signed in to assess page!'"
+    *ngIf="!isAuthenticated"
+  ></loader-widget>
+</div>

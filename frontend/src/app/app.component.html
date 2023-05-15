@@ -1,0 +1,10 @@
+<div class="app-container">
+  <app-navbar></app-navbar>
+  <app-sidebar *ngIf="!isPublicPage"></app-sidebar>
+
+  <div class="p-5 my-5" [ngClass]="!isPublicPage ? 'container-margin' : ''">
+    <notifier-container></notifier-container>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-footer *ngIf="!isPublicPage"></app-footer>

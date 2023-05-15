@@ -1,0 +1,82 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top w-100 z-3 d-flex justify-content-between"
+>
+  <div class="container-fluid">
+    <div class="d-flex flex-row align-items-center">
+      <a
+        [routerLink]="'/'"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-primary fw-bold text-decoration-none"
+        *ngIf="!isAuthenticated"
+      >
+        <span class="fs-4">OnShop</span>
+      </a>
+      <span class="ms-3">
+        <a class="dropdown-item fw-bold" [routerLink]="['/products']">Home</a>
+      </span>
+    </div>
+
+    <div
+      class="collapse navbar-collapse px-4 w-100 d-flex flex-row w-100 justify-content-end"
+    >
+      <div class="dropdown-center" *ngIf="isAuthenticated">
+        <a
+          href="#"
+          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+          id="dropdownUser2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="assets/avatar/avatar.png"
+            alt=""
+            width="32"
+            height="32"
+            class="rounded-circle me-2"
+          />
+          <strong>{{ userEmail }}</strong>
+        </a>
+
+        <ul
+          class="dropdown-menu text-small shadow"
+          aria-labelledby="dropdownUser2"
+        >
+          <li>
+            <a class="dropdown-item" [routerLink]="['/orders']">My Orders</a>
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/account']">My Account</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+            <button type="submit" class="dropdown-item" (click)="logOut()">
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-flex flex-row g-2" *ngIf="!isAuthenticated">
+        <div class="mx-1">
+          <button class="btn btn-primary" [routerLink]="['/login']">
+            Login
+          </button>
+        </div>
+        <div class="mx-1">
+          <button class="btn btn-primary" [routerLink]="['/register']">
+            Sign Up
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <form class="ms-3">
+          <button class="btn btn-outline-dark" type="submit">
+            <i class="bi-cart-fill me-1"></i>
+            Cart
+            <span class="badge bg-primary text-white ms-1 rounded-pill">0</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>

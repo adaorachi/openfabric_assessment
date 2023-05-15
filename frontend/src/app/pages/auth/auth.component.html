@@ -1,0 +1,35 @@
+<div class="bg-white p-4 w-25 m-auto rounded shadow-sm">
+  <div class="text-center mb-3">
+    <h4 class="fw-bolder">{{ isLoginPage ? "Login" : "Sign Up" }}</h4>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
+    </div>
+    <div class="text-center">
+      <!-- [disabled]="!form.valid || submitting" -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!loginForm.valid || submitting"
+      >
+        {{ submitting ? "Loading..." : isLoginPage ? "Login" : "Sign Up" }}
+      </button>
+    </div>
+  </form>
+</div>

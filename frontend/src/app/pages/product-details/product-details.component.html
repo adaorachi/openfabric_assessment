@@ -1,0 +1,54 @@
+<section class="py-0">
+  <div class="mb-4">
+    <button
+      class="button-back bg-primary rounded-circle d-flex shadow justify-content-center align-items-center border-0 outline-0"
+      (click)="goBack()"
+    >
+      <i class="bi bi-arrow-left-circle-fill fs-5"></i>
+    </button>
+  </div>
+  <div class="card bg-white rounded-2 overflow-hidden">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4">
+        <div class="box-image-bg m-3 p-3">
+          <img
+            class="card-img-top mb-5 mb-md-0"
+            src="{{ product.imageUrl }}"
+            alt="{{ product.title }}"
+          />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="p-5">
+          <div class="small mb-1 text-capitalize">
+            {{ product.category }}
+          </div>
+          <h2 class="fw-bolder fs-4 mb-0 text-capitalize">
+            {{ product.title }}
+          </h2>
+          <div class="mb-3">
+            <span class="fs-5 fw-light text-secondary">{{
+              product.price | currency
+            }}</span>
+          </div>
+          <p class="">
+            {{ product.desc }}
+          </p>
+          <div class="d-flex">
+            <input
+              class="form-control text-center me-3"
+              id="inputQuantity"
+              type="num"
+              value="1"
+              style="max-width: 3rem"
+            />
+            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+              <i class="bi-cart-fill me-1"></i>
+              Add to cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

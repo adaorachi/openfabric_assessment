@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="" *ngIf="isAuthenticated">
+    <div class="bg-white rounded" *ngIf="!isGettingProducts">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              <div class="table-image">
+                <img
+                  class="h-100 w-100"
+                  src="{{ product.imageUrl }}"
+                  alt="{{ product.title }}"
+                />
+              </div>
+            </td>
+            <td class="text-capitalize">{{ product.title }}</td>
+            <td class="text-capitalize">{{ product.category }}</td>
+            <td>{{ product.price | currency }}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm text-white"
+                  [routerLink]="['/product', product._id]"
+                  [state]="{ data: product }"
+                >
+                  View
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-warning text-white btn-sm"
+                  [routerLink]="['/edit-product', product._id]"
+                  [state]="{ data: product }"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  (click)="onDeleteProduct(product._id)"
+                  [disabled]="productId === product._id && isDeletingProduct"
+                >
+                  {{
+                    isDeletingProduct && productId === product._id
+                      ? "Deleting .."
+                      : "Delete"
+                  }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <loader-widget
+      [title]="'Content Loading ...'"
+      *ngIf="isGettingProducts"
+    ></loader-widget>
+  </div>
+  <loader-widget
+    [title]="'You must be logged in to assess page'"
+    *ngIf="!isAuthenticated"
+  ></loader-widget>
+</div>

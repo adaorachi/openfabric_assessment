@@ -1,0 +1,7 @@
+.footer {
+    width: calc(100% - 250px);
+    right: 0;
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+}
