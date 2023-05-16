@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Subject } from 'rxjs';
 import User from '../models/auth';
-import { environment as env } from 'src/environments/environment';
+import { environment as env } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -50,33 +50,34 @@ export class AuthService {
       }>(`${this.ROOT_URL}/${endpoint}`, payload, this.httpOptions)
       .subscribe(
         (res) => {
-        this.token = res.token;
-        if (this.token) {
-          this.authenticatedSub.next(true);
-          this.isAuthenticated = true;
+          this.token = res.token;
+          if (this.token) {
+            this.authenticatedSub.next(true);
+            this.isAuthenticated = true;
 
-          this.logOutTimer = setTimeout(() => {
-            this.logOutUser();
-          }, res.expiresIn * 1000);
+            this.logOutTimer = setTimeout(() => {
+              this.logOutUser();
+            }, res.expiresIn * 1000);
 
-          const now = new Date();
-          const expiresDate = new Date(now.getTime() + res.expiresIn * 1000);
+            const now = new Date();
+            const expiresDate = new Date(now.getTime() + res.expiresIn * 1000);
 
-          this.storeLoginDetails(this.token, expiresDate);
+            this.storeLoginDetails(this.token, expiresDate);
 
-          this.showNotification(
-            'success',
-            `User successfully ${isLogin ? 'logged in' : 'registered'}!`
-          );
-          this.router.navigate(['/']);
-        }
-      },
+            this.showNotification(
+              'success',
+              `User successfully ${isLogin ? 'logged in' : 'registered'}!`
+            );
+            this.router.navigate(['/']);
+          }
+        },
         (error) => {
-           this.showNotification(
+          this.showNotification(
             'error',
             `${JSON.stringify(error?.error?.message)}`
           );
-        });
+        }
+      );
   }
 
   logOutUser() {
