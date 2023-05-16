@@ -9,7 +9,7 @@ import productRoutes from "./routes/product.js";
 import orderRoutes from "./routes/order.js";
 import config from "./config.js";
 const CONNECTION_URL = config.CONNECTION_URL;
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
