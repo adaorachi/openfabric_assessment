@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURL: 'https://erin-nervous-mussel.cyclic.app/api/v1',
+  baseURL: 'https://esetech-app.ew.r.appspot.com/api/v1',
 };

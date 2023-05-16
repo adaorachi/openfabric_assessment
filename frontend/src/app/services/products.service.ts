@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 import Product from '../models/product';
-import { environment as env } from 'src/environments/environment.prod';
+import { environment as env } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

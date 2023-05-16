@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { Subject } from 'rxjs';
 import User from '../models/auth';
-import { environment as env } from 'src/environments/environment.prod';
+import { environment as env } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
